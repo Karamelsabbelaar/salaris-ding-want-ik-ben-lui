@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salaris Verdeler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0D0D11;
+    --card:     #14141A;
+    --border:   #252530;
+    --border2:  #32323F;
+    --text:     #F2EFE8;
+    --muted:    #55556A;
+    --dim:      #2E2E3A;
+    --accent:   #C6F135;
+    --accent2:  #9ECB20;
+    --error:    #FF6B6B;
+    --bar-bg:   #1C1C25;
+  }
+
+  html, body {
+    min-height: 100%;
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 16px 64px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 36px 32px 32px;
+  }
+
+  /* ── header ── */
+  .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+    margin-bottom: 32px;
+    color: var(--text);
+  }
+
+  /* ── input ── */
+  .inp-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .input-wrap {
+    display: flex;
+    align-items: stretch;
+    border: 1.5px solid var(--border2);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .input-wrap:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(198,241,53,.09);
+  }
+  .eur-prefix {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    color: var(--dim);
+    padding: 0 14px;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    border-right: 1.5px solid var(--border2);
+    user-select: none;
+  }
+  #salary-input {
+    flex: 1;
+    background: var(--card);
+    border: none;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text);
+    padding: 14px 16px;
+    caret-color: var(--accent);
+    width: 100%;
+  }
+  #salary-input::placeholder { color: var(--border2); }
+
+  /* ── error ── */
+  .error-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--error);
+    min-height: 18px;
+    margin-bottom: 4px;
+    letter-spacing: .5px;
+    transition: opacity .15s;
+  }
+
+  /* ── button ── */
+  .calc-btn {
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 28px;
+    padding: 16px;
+    border: none;
+    border-radius: 13px;
+    background: linear-gradient(105deg, var(--accent) 0%, var(--accent2) 100%);
+    color: #0D0D11;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+  }
+  .calc-btn:hover  { opacity: .88; }
+  .calc-btn:active { transform: scale(.98); }
+
+  /* ── divider ── */
+  hr {
+    border: none;
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 26px;
+  }
+
+  /* ── results ── */
+  #results {
+    display: none;
+  }
+  #results.show {
+    display: block;
+    animation: fadeUp .22s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .split-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 1.5px;
+    margin-bottom: 22px;
+  }
+
+  .account-block { margin-bottom: 6px; }
+
+  .acc-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
+  }
+  .acc-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    flex: 1;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 7px;
+  }
+  .tag-b { background: rgba(198,241,53,.1); color: var(--accent); }
+  .tag-s { background: rgba(255,255,255,.04); color: var(--muted); }
+
+  .amount {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1.2px;
+    line-height: 1;
+  }
+  .amount-b { color: var(--accent); margin-bottom: 14px; }
+  .amount-s { color: var(--text); }
+
+  /* ── bar ── */
+  .bar-track {
+    height: 5px;
+    border-radius: 3px;
+    background: var(--bar-bg);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    width: 0%;
+    transition: width .45s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── footer ── */
+  .footer {
+    margin-top: 36px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--border2);
+    letter-spacing: 1px;
+  }
+
+  /* ── mobile ── */
+  @media (max-width: 480px) {
+    html, body { padding: 20px 12px 48px; }
+    .card { padding: 28px 22px 26px; border-radius: 20px; }
+    h1 { font-size: 26px; }
+    .amount { font-size: 32px; }
+    #salary-input { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <p class="sub">Uitbetaald op de 25e</p>
+  <h1>Salaris<br>Verdeler</h1>
+
+  <p class="inp-lbl">Salaris deze maand</p>
+  <div class="input-wrap">
+    <span class="eur-prefix">€</span>
+    <input id="salary-input" type="text" inputmode="decimal"
+           placeholder="0,00" autocomplete="off" spellcheck="false">
+  </div>
+
+  <p class="error-msg" id="error"></p>
+
+  <button class="calc-btn" onclick="calculate()">VERDEEL SALARIS</button>
+
+  <hr>
+
+  <div id="results">
+    <p class="split-note" id="split-note"></p>
+
+    <!-- Betaalrekening -->
+    <div class="account-block">
+      <div class="acc-row">
+        <span class="acc-lbl">BETAALREKENING</span>
+        <span class="tag tag-b">helft + €50</span>
+      </div>
+      <p class="amount amount-b" id="amt-betaal">€ 0,00</p>
+    </div>
+
+    <!-- Bar -->
+    <div class="bar-track"><div class="bar-fill" id="bar"></div></div>
+
+    <!-- Spaarrekening -->
+    <div class="account-block">
+      <div class="acc-row">
+        <span class="acc-lbl">SPAARREKENING</span>
+        <span class="tag tag-s">helft</span>
+      </div>
+      <p class="amount amount-s" id="amt-spaar">€ 0,00</p>
+    </div>
+  </div>
+
+  <p class="footer">alle berekeningen in centen &middot; geen afrondingsfouten</p>
+</div>
+
+<script>
+  const BONUS_CENTS = 5000; // € 50,00
+
+  function fmt(cents) {
+    const euros = Math.floor(cents / 100);
+    const ct    = String(cents % 100).padStart(2, '0');
+    return '€\u00A0' + euros.toLocaleString('nl-NL') + ',' + ct;
+  }
+
+  function calculate() {
+    const raw   = document.getElementById('salary-input').value.trim().replace(',', '.');
+    const errEl = document.getElementById('error');
+    const resEl = document.getElementById('results');
+
+    errEl.textContent = '';
+    resEl.classList.remove('show');
+
+    const v = parseFloat(raw);
+    if (!raw || isNaN(v) || v <= 0) {
+      errEl.textContent = 'Voer een geldig positief bedrag in.';
+      return;
+    }
+
+    const total = Math.round(v * 100);
+    if (total <= BONUS_CENTS) {
+      errEl.textContent = 'Salaris moet meer dan € 50,00 zijn.';
+      return;
+    }
+
+    const split  = total - BONUS_CENTS;
+    const spaar  = Math.floor(split / 2);
+    const betaal = total - spaar;
+
+    document.getElementById('amt-betaal').textContent  = fmt(betaal);
+    document.getElementById('amt-spaar').textContent   = fmt(spaar);
+    document.getElementById('bar').style.width         = Math.round(betaal / total * 100) + '%';
+    document.getElementById('split-note').textContent  =
+      'verdelen\u00A0' + fmt(split) + '\u00A0 · \u00A0+€\u00A050,00 bonus';
+
+    // re-trigger animation on repeated calculations
+    resEl.classList.remove('show');
+    void resEl.offsetWidth;
+    resEl.classList.add('show');
+  }
+
+  document.getElementById('salary-input')
+    .addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+</script>
+</body>
+</html>
