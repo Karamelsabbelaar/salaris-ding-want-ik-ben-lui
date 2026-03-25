@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Salaris Verdeler</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230D0D11' width='192' height='192'/><rect fill='%23C6F135' x='36' y='48' width='120' height='96' rx='12'/><text x='96' y='110' font-family='system-ui' font-size='64' font-weight='700' fill='%230D0D11' text-anchor='middle'>€</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230D0D11' width='192' height='192' rx='40'/><rect fill='%23C6F135' x='36' y='48' width='120' height='96' rx='12'/><text x='96' y='110' font-family='system-ui' font-size='64' font-weight='700' fill='%230D0D11' text-anchor='middle'>€</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Clash+Display:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -27,7 +29,7 @@
   html, body {
     min-height: 100%;
     background: var(--bg);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     color: var(--text);
     display: flex;
     justify-content: center;
@@ -46,30 +48,33 @@
 
   /* ── header ── */
   .sub {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
     color: var(--muted);
-    letter-spacing: 2.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 6px;
+    margin-bottom: 12px;
+    font-weight: 600;
   }
   h1 {
-    font-size: 30px;
+    font-size: 44px;
     font-weight: 700;
-    letter-spacing: -0.8px;
-    line-height: 1.1;
-    margin-bottom: 32px;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 44px;
     color: var(--text);
+    font-family: 'Clash Display', sans-serif;
   }
 
   /* ── input ── */
   .inp-lbl {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    letter-spacing: 0;
+    text-transform: none;
+    margin-bottom: 14px;
+    font-weight: 600;
   }
 
   .input-wrap {
@@ -78,7 +83,7 @@
     border: 1.5px solid var(--border2);
     border-radius: 14px;
     overflow: hidden;
-    margin-bottom: 8px;
+    margin-bottom: 14px;
     transition: border-color .15s, box-shadow .15s;
   }
   .input-wrap:focus-within {
@@ -87,14 +92,15 @@
   }
   .eur-prefix {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 18px;
+    font-size: 24px;
     color: var(--dim);
-    padding: 0 14px;
+    padding: 0 18px;
     background: var(--card);
     display: flex;
     align-items: center;
     border-right: 1.5px solid var(--border2);
     user-select: none;
+    font-weight: 600;
   }
   #salary-input {
     flex: 1;
@@ -102,10 +108,10 @@
     border: none;
     outline: none;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 400;
     color: var(--text);
-    padding: 14px 16px;
+    padding: 16px 20px;
     caret-color: var(--accent);
     width: 100%;
   }
@@ -113,29 +119,31 @@
 
   /* ── error ── */
   .error-msg {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
     color: var(--error);
-    min-height: 18px;
-    margin-bottom: 4px;
-    letter-spacing: .5px;
+    min-height: 22px;
+    margin-bottom: 6px;
+    letter-spacing: 0;
     transition: opacity .15s;
+    font-weight: 500;
   }
 
   /* ── button ── */
   .calc-btn {
     width: 100%;
-    margin-top: 6px;
-    margin-bottom: 28px;
-    padding: 16px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    padding: 18px;
     border: none;
     border-radius: 13px;
     background: linear-gradient(105deg, var(--accent) 0%, var(--accent2) 100%);
     color: #0D0D11;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     cursor: pointer;
     transition: opacity .15s, transform .1s;
   }
@@ -147,7 +155,7 @@
     border: none;
     height: 1px;
     background: var(--border);
-    margin-bottom: 26px;
+    margin-bottom: 36px;
   }
 
   /* ── results ── */
@@ -164,57 +172,61 @@
   }
 
   .split-note {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--dim);
-    letter-spacing: 1.5px;
-    margin-bottom: 22px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0;
+    margin-bottom: 32px;
+    line-height: 1.5;
+    font-weight: 500;
   }
 
-  .account-block { margin-bottom: 6px; }
+  .account-block { margin-bottom: 32px; }
 
   .acc-row {
     display: flex;
     align-items: center;
-    margin-bottom: 7px;
+    margin-bottom: 12px;
   }
   .acc-lbl {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 1.5px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    letter-spacing: 0;
     flex: 1;
+    font-weight: 600;
   }
   .tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 1px;
-    padding: 4px 10px;
-    border-radius: 7px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 500;
   }
   .tag-b { background: rgba(198,241,53,.1); color: var(--accent); }
   .tag-s { background: rgba(255,255,255,.04); color: var(--muted); }
 
   .amount {
-    font-size: 38px;
+    font-size: 48px;
     font-weight: 700;
-    letter-spacing: -1.2px;
-    line-height: 1;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
   }
-  .amount-b { color: var(--accent); margin-bottom: 14px; }
+  .amount-b { color: var(--accent); margin-bottom: 18px; }
   .amount-s { color: var(--text); }
 
   /* ── bar ── */
   .bar-track {
-    height: 5px;
-    border-radius: 3px;
+    height: 8px;
+    border-radius: 4px;
     background: var(--bar-bg);
     overflow: hidden;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
   }
   .bar-fill {
     height: 100%;
-    border-radius: 3px;
+    border-radius: 4px;
     background: linear-gradient(90deg, var(--accent), var(--accent2));
     width: 0%;
     transition: width .45s cubic-bezier(.4,0,.2,1);
@@ -222,21 +234,90 @@
 
   /* ── footer ── */
   .footer {
-    margin-top: 36px;
+    margin-top: 44px;
     text-align: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
     color: var(--border2);
-    letter-spacing: 1px;
+    letter-spacing: 0;
   }
 
   /* ── mobile ── */
-  @media (max-width: 480px) {
-    html, body { padding: 20px 12px 48px; }
-    .card { padding: 28px 22px 26px; border-radius: 20px; }
-    h1 { font-size: 26px; }
-    .amount { font-size: 32px; }
-    #salary-input { font-size: 20px; }
+  @media (max-width: 640px) {
+    html, body { 
+      padding: 24px 14px 52px; 
+    }
+    .card { 
+      padding: 28px 20px 24px; 
+      border-radius: 18px; 
+    }
+    .sub {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    h1 { 
+      font-size: 32px; 
+      margin-bottom: 32px;
+      line-height: 1.2;
+    }
+    .inp-lbl {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .input-wrap {
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    .eur-prefix {
+      font-size: 20px;
+      padding: 0 14px;
+    }
+    #salary-input { 
+      font-size: 22px;
+      padding: 14px 16px;
+    }
+    .error-msg {
+      font-size: 12px;
+      min-height: 20px;
+    }
+    .calc-btn {
+      padding: 16px;
+      font-size: 12px;
+      margin-bottom: 32px;
+      margin-top: 8px;
+    }
+    .amount { 
+      font-size: 40px;
+      margin-bottom: 14px;
+    }
+    .amount-b {
+      margin-bottom: 14px;
+    }
+    .bar-track {
+      margin-bottom: 28px;
+    }
+    .split-note {
+      font-size: 12px;
+      margin-bottom: 24px;
+    }
+    .acc-lbl {
+      font-size: 12px;
+    }
+    .tag {
+      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: 7px;
+    }
+    .acc-row {
+      margin-bottom: 10px;
+    }
+    .account-block {
+      margin-bottom: 28px;
+    }
+    .footer {
+      margin-top: 36px;
+      font-size: 11px;
+    }
   }
 </style>
 </head>
