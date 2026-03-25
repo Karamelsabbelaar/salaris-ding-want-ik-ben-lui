@@ -397,17 +397,17 @@
       return;
     }
 
-    // Stap 1: splits 50/50
-    const half   = Math.floor(total / 2);
-    // Stap 2: €50 gaat van spaarrekening naar betaalrekening
-    const spaar  = half - BONUS_CENTS;
-    const betaal = total - spaar;
+    // Stap 1: trek €50 af, splits de rest 50/50
+    const remainder = total - BONUS_CENTS;
+    const half      = Math.floor(remainder / 2);
+    const spaar     = half;
+    const betaal    = remainder - half + BONUS_CENTS;
 
     document.getElementById('amt-betaal').textContent  = fmt(betaal);
     document.getElementById('amt-spaar').textContent   = fmt(spaar);
     document.getElementById('bar').style.width         = Math.round(betaal / total * 100) + '%';
     document.getElementById('split-note').textContent  =
-      '50/50\u00A0→\u00A0' + fmt(half) + ' elk\u00A0 · \u00A0€50 van spaar naar betaal';
+      '50/50\u00A0→\u00A0' + fmt(half) + ' elk\u00A0 · \u00A0€50 naar betaal';
 
     // re-trigger animation on repeated calculations
     resEl.classList.remove('show');
